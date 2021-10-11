@@ -1,0 +1,19 @@
+name: update website
+
+on:
+  push:
+    branches: 
+    - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: POST trigger to website
+        run: |
+              curl \
+              -X POST \
+              -H "Accept: application/vnd.github.v3+json" \
+              -H "Authorization: token ${{ secrets.$AUTODEPLOY_TOKEN }}" \
+              https://api.github.com/repos/USGS-Astrogeology/FoundationalDataProducts_Website/dispatches \
+              -d '{"event_type":"automated_deploy"}'
